@@ -5,10 +5,12 @@ class LoginTextField extends StatelessWidget {
     Key? key,
     required this.hintText,
     required this.obscure,
+    required this.onChanged,
   }) : super(key: key);
 
   final String hintText;
   final bool obscure;
+  final ValueChanged<String> onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class LoginTextField extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
         ),
       ),
+      onChanged: (value) => onChanged(value),
       obscureText: obscure,
     );
   }
