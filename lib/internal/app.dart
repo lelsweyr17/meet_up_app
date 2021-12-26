@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:meet_up_app/data/auth_service.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
-import 'package:meet_up_app/presentation/pages/home_page.dart';
-import 'package:meet_up_app/presentation/pages/login_page.dart';
-import 'package:meet_up_app/presentation/pages/sign_up_page.dart';
-import 'package:meet_up_app/presentation/pages/start_page.dart';
+import 'package:meet_up_app/internal/routes.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:provider/provider.dart';
 
 class App extends StatefulWidget {
@@ -25,13 +22,6 @@ class _AppState extends State<App> {
     _authBloc = authBloc;
   }
 
-  final routes = {
-    "/start": (context) => const StartPage(),
-    "/home": (context) => const HomePage(),
-    "/login": (context) => const LoginPage(),
-    "/signUp": (context) => const SignUpPage(),
-  };
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -43,12 +33,14 @@ class _AppState extends State<App> {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Meet Up App',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        routes: routes,
-        initialRoute: "/start",
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routes: Routes.instance.routes,
+        initialRoute: Routes.instance.initialRoute,
       ),
     );
   }
