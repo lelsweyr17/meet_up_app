@@ -15,7 +15,6 @@ class LoginTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      showCursor: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),

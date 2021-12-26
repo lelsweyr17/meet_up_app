@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/button.dart';
 
 class StartPage extends StatelessWidget {
@@ -6,30 +7,43 @@ class StartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _localizations = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Button(
-              text: "Log In",
-              onPressed: () => onLoginPressed(context),
+              text: _localizations.logIn,
+              onPressed: () => _onLoginPressed(context),
             ),
             Button(
-              text: "Sign Up",
-              onPressed: () => onSignUpPressed(context),
+              text: _localizations.signUp,
+              onPressed: () => _onSignUpPressed(context),
             ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                child: Text(_localizations.skip),
+                onTap: () => _onSkipPressed(context),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 
-  void onLoginPressed(BuildContext context) {
+  void _onLoginPressed(BuildContext context) {
     Navigator.pushNamed(context, "/login");
   }
 
-  void onSignUpPressed(BuildContext context) {
+  void _onSignUpPressed(BuildContext context) {
     Navigator.pushNamed(context, "/signUp");
+  }
+
+  void _onSkipPressed(BuildContext context) {
+    Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
   }
 }

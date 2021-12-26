@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/button.dart';
 import 'package:meet_up_app/presentation/components/login_text_field.dart';
 
@@ -15,6 +16,13 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final AuthBloc _authBloc = AuthBloc();
+  late final AppLocalizations _localizations;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _localizations = AppLocalizations.of(context)!;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +34,19 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             LoginTextField(
-              hintText: "Enter your email",
+              hintText: _localizations.enterYourEmail,
               obscure: false,
               onChanged: (value) => _authBloc.emailSink.add(value),
             ),
             const SizedBox(height: 16),
             LoginTextField(
-              hintText: "Enter your password",
+              hintText: _localizations.enterYourPassword,
               obscure: true,
               onChanged: (value) => _authBloc.passwordSink.add(value),
             ),
             const SizedBox(height: 16),
             Button(
-              text: "Login",
+              text: _localizations.logIn,
               onPressed: () => _authBloc.inEvent.add(AuthEvent.logIn),
             ),
           ],
