@@ -1,0 +1,8 @@
+{
+    "signUp": "Регистрация",
+    "logIn": "Вход",
+    "logOut": "Выход",
+    "skip": "Пропустить",
+    "enterYourEmail": "Введите email",
+    "enterYourPassword": "Введите пароль"
+}
