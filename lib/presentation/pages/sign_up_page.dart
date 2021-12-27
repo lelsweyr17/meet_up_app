@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
@@ -13,14 +14,15 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  late final AuthBloc _authBloc;
   late final AppLocalizations _localizations;
+  late final AuthBloc _authBloc;
+
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _authBloc = AuthBloc();
     _localizations = AppLocalizations.of(context)!;
+    _authBloc = BlocProvider.of<AuthBloc>(context);
   }
 
   @override
@@ -46,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
             const SizedBox(height: 16),
             Button(
               text: _localizations.logIn,
-              onPressed: () => _authBloc.inEvent.add(AuthEvent.signUp),
+              onPressed: () => _authBloc.add(LogInEvent()),
             ),
           ],
         ),

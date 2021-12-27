@@ -9,13 +9,18 @@ import 'package:meet_up_app/utils/log.dart';
 const _tag = "auth_bloc";
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc() : super(AuthState.unauthenticated) {
+  AuthBloc() : super(Unauthenticated()) {
     _init();
   }
 
   void _init() {
     Log.message(_tag, "_init");
-    _outEvent.listen((event) => _handleEvent(event));
+    on<AuthEvent>(
+      (event, emit) {
+        _handleEvent(event, emit);
+      },
+    );
+
     _emailStream.listen((email) => _email = email);
     _passwordStream.listen((password) => _password = password);
   }
@@ -40,24 +45,26 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   Stream<String> get _emailStream => _emailController.stream;
 
-  Future<void> _handleEvent(AuthEvent event) async {
-    if (event == AuthEvent.logIn) {
+  Future<void> _handleEvent(
+    AuthEvent event,
+    Emitter emit,
+  ) async {
+    if (event is LogInEvent) {
       final result = await _authService.signInWithEmailAndPassword(
         email: _email,
         password: _password,
       );
-      if (result) {}
-    } else if (event == AuthEvent.logOut) {
+    } else if (event is LogOutEvent) {
       _authService.signOut();
-    } else if (event == AuthEvent.signUp) {
+    } else if (event is SignUpEvent) {
       _authService.createUserWithEmailAndPassword(
         email: _email,
         password: _password,
       );
     }
-  }
 
-  void dispose() {
-    _eventController.close();
+    void dispose() {
+      _eventController.close();
+    }
   }
 }
