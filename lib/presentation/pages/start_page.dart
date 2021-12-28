@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/internal/routes.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/button.dart';
 
@@ -36,14 +37,18 @@ class StartPage extends StatelessWidget {
   }
 
   void _onLoginPressed(BuildContext context) {
-    Navigator.pushNamed(context, "/login");
+    Navigator.pushNamed(context, Routes.instance.loginPage);
   }
 
   void _onSignUpPressed(BuildContext context) {
-    Navigator.pushNamed(context, "/signUp");
+    Navigator.pushNamed(context, Routes.instance.signUpPage);
   }
 
   void _onSkipPressed(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+      context,
+      Routes.instance.homePage,
+      (route) => false,
+    );
   }
 }

@@ -15,11 +15,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   void _init() {
     Log.message(_tag, "_init");
-    on<AuthEvent>(
-      (event, emit) {
-        _handleEvent(event, emit);
-      },
-    );
+    _handleEvents();
 
     _emailStream.listen((email) => _email = email);
     _passwordStream.listen((password) => _password = password);
@@ -33,38 +29,54 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final _passwordController = StreamController<String>();
   final _emailController = StreamController<String>();
 
-  Sink<AuthEvent> get inEvent => _eventController.sink;
-
   Sink<String> get passwordSink => _passwordController.sink;
 
   Sink<String> get emailSink => _emailController.sink;
-
-  Stream<AuthEvent> get _outEvent => _eventController.stream;
 
   Stream<String> get _passwordStream => _passwordController.stream;
 
   Stream<String> get _emailStream => _emailController.stream;
 
-  Future<void> _handleEvent(
-    AuthEvent event,
-    Emitter emit,
-  ) async {
-    if (event is LogInEvent) {
-      final result = await _authService.signInWithEmailAndPassword(
-        email: _email,
-        password: _password,
-      );
-    } else if (event is LogOutEvent) {
-      _authService.signOut();
-    } else if (event is SignUpEvent) {
-      _authService.createUserWithEmailAndPassword(
-        email: _email,
-        password: _password,
-      );
-    }
+  void _handleEvents() {
+    Log.message(_tag, "_handleEvents");
 
-    void dispose() {
-      _eventController.close();
-    }
+    on<LogInEvent>(
+      (event, emit) async => await _logInEvent(emit),
+    );
+    on<LogOutEvent>(
+      (event, emit) async => await _logOutEvent(emit),
+    );
+    on<SignUpEvent>(
+      (event, emit) async => await _signUpEvent(emit),
+    );
+  }
+
+  Future<void> _logInEvent(Emitter emit) async {
+    emit(LoadingAuthentication());
+    await _authService.signInWithEmailAndPassword(
+      email: _email,
+      password: _password,
+    );
+    emit(Authenticated());
+  }
+
+  Future<void> _logOutEvent(Emitter emit) async {
+    emit(LoadingAuthentication());
+    await _authService.signOut();
+    emit(Unauthenticated());
+  }
+
+  Future<void> _signUpEvent(Emitter emit) async {
+    emit(LoadingAuthentication());
+    await _authService.createUserWithEmailAndPassword(
+      email: _email,
+      password: _password,
+    );
+    emit(Authenticated());
+  }
+
+  void dispose() {
+    _passwordController.close();
+    _emailController.close();
   }
 }
