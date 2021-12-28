@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:meet_up_app/internal/routes.dart';
+import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/button.dart';
+
+const _tag = "start_page";
 
 class StartPage extends StatelessWidget {
   const StartPage({Key? key}) : super(key: key);
@@ -17,38 +19,22 @@ class StartPage extends StatelessWidget {
           children: [
             Button(
               text: _localizations.logIn,
-              onPressed: () => _onLoginPressed(context),
+              onPressed: () => onNavigateLogInPressed(context),
             ),
             Button(
               text: _localizations.signUp,
-              onPressed: () => _onSignUpPressed(context),
+              onPressed: () => onNavigateToSignUpPressed(context),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 child: Text(_localizations.skip),
-                onTap: () => _onSkipPressed(context),
+                onTap: () => onSkipPressed(context),
               ),
             )
           ],
         ),
       ),
-    );
-  }
-
-  void _onLoginPressed(BuildContext context) {
-    Navigator.pushNamed(context, Routes.instance.loginPage);
-  }
-
-  void _onSignUpPressed(BuildContext context) {
-    Navigator.pushNamed(context, Routes.instance.signUpPage);
-  }
-
-  void _onSkipPressed(BuildContext context) {
-    Navigator.pushNamedAndRemoveUntil(
-      context,
-      Routes.instance.homePage,
-      (route) => false,
     );
   }
 }
