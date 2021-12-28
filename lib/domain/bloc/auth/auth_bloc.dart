@@ -5,6 +5,7 @@ import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/utils/log.dart';
+import 'package:meet_up_app/utils/result.dart';
 
 const _tag = "auth_bloc";
 
@@ -25,7 +26,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   String _password = "";
   String _email = "";
 
-  final _eventController = StreamController<AuthEvent>();
   final _passwordController = StreamController<String>();
   final _emailController = StreamController<String>();
 
@@ -52,27 +52,48 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _logInEvent(Emitter emit) async {
+    Log.message(_tag, "_logInEvent");
     emit(LoadingAuthentication());
-    await _authService.signInWithEmailAndPassword(
+
+    final result = await _authService.signInWithEmailAndPassword(
       email: _email,
       password: _password,
     );
-    emit(Authenticated());
+
+    if (result == Result.success) {
+      emit(Authenticated());
+    } else {
+      emit(Unauthenticated());
+    }
   }
 
   Future<void> _logOutEvent(Emitter emit) async {
+    Log.message(_tag, "_logOutEvent");
     emit(LoadingAuthentication());
-    await _authService.signOut();
-    emit(Unauthenticated());
+
+    final result = await _authService.signOut();
+
+    if (result == Result.success) {
+      emit(Unauthenticated());
+    } else {
+      emit(Authenticated());
+    }
   }
 
   Future<void> _signUpEvent(Emitter emit) async {
+    Log.message(_tag, "_signUpEvent");
     emit(LoadingAuthentication());
-    await _authService.createUserWithEmailAndPassword(
+
+    final result = await _authService.createUserWithEmailAndPassword(
       email: _email,
       password: _password,
     );
-    emit(Authenticated());
+
+    if (result == Result.success) {
+      emit(Authenticated());
+    } else {
+      emit(Unauthenticated());
+    }
   }
 
   void dispose() {

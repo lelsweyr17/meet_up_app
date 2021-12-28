@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meet_up_app/utils/log.dart';
+import 'package:meet_up_app/utils/result.dart';
 
 const _tag = "auth_service";
 
@@ -15,8 +16,7 @@ class AuthService {
   Future<void> _init() async {
     Log.message(_tag, "_init");
     if (FirebaseAuth.instance.currentUser == null) {
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInAnonymously();
+      UserCredential userCredential = await signInAnonymously();
       Log.message(_tag, "signInAnonymously: userCredential=$userCredential");
     }
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
@@ -30,50 +30,82 @@ class AuthService {
     });
   }
 
-  Future<bool> createUserWithEmailAndPassword({
+  Future<UserCredential> signInAnonymously() async {
+    Log.message(_tag, "signInAnonymously");
+    return await FirebaseAuth.instance.signInAnonymously();
+  }
+
+  Future<Result> createUserWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
     Log.message(_tag, "createUserWithEmailAndPassword: email=$email");
+
     try {
       if (FirebaseAuth.instance.currentUser?.isAnonymous == true) {
-        Log.message(_tag, "current user is anonymous");
-        final credential = EmailAuthProvider.credential(
+        return await _createUserWhenCurrentUserIsAnonymous(
           email: email,
           password: password,
         );
-
-        final result = await _linkWithAnonymous(credential);
-
-        if (result) {
-          Log.message(_tag,
-              "current credentials: ${FirebaseAuth.instance.currentUser}");
-        }
-      }
-
-      if (FirebaseAuth.instance.currentUser == null) {
-        Log.message(_tag, "current user == null");
-        final credential = FirebaseAuth.instance.createUserWithEmailAndPassword(
+      } else if (FirebaseAuth.instance.currentUser == null) {
+        return await _createUserWhenCurrentUserIsNull(
           email: email,
           password: password,
         );
       }
-      return true;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        Log.message(_tag, 'The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        Log.message(_tag, 'The account already exists for that email.');
-      } else {
-        Log.message(_tag, e.toString());
-      }
+      _firebaseAuthException(e);
     } catch (e) {
       Log.message(_tag, e.toString());
     }
-    return false;
+    return Result.failure;
   }
 
-  Future<bool> _linkWithAnonymous(AuthCredential credential) async {
+  void _firebaseAuthException(FirebaseAuthException e) {
+    if (e.code == 'weak-password') {
+      Log.message(_tag, 'The password provided is too weak.');
+    } else if (e.code == 'email-already-in-use') {
+      Log.message(_tag, 'The account already exists for that email.');
+    } else {
+      Log.message(_tag, e.toString());
+    }
+  }
+
+  Future<Result> _createUserWhenCurrentUserIsAnonymous({
+    required String email,
+    required String password,
+  }) async {
+    Log.message(_tag, "_createUserWhenCurrentUserIsAnonymous: email=$email");
+
+    final credential = EmailAuthProvider.credential(
+      email: email,
+      password: password,
+    );
+
+    final result = await _linkWithAnonymous(credential);
+
+    if (result == Result.success) {
+      return Result.success;
+    } else {
+      return Result.failure;
+    }
+  }
+
+  Future<Result> _createUserWhenCurrentUserIsNull({
+    required String email,
+    required String password,
+  }) async {
+    Log.message(_tag, "_createUserWhenUserIsNull: email=$email");
+
+    final credential =
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
+    return Result.success;
+  }
+
+  Future<Result> _linkWithAnonymous(AuthCredential credential) async {
     Log.message(_tag, "_linkWithAnonymous: credential=$credential");
     try {
       final userCredential = await FirebaseAuth.instance.currentUser
@@ -81,16 +113,16 @@ class AuthService {
 
       Log.message(_tag, "Link with anonymous is success");
 
-      return true;
+      return Result.success;
     } catch (e) {
       Log.message(_tag, "Link with anonymous is failure");
       Log.message(_tag, e.toString());
 
-      return false;
+      return Result.failure;
     }
   }
 
-  Future<bool> signInWithEmailAndPassword({
+  Future<Result> signInWithEmailAndPassword({
     required String email,
     required String password,
   }) async {
@@ -102,7 +134,7 @@ class AuthService {
         password: password,
       );
       print("signInWithEmailAndPassword ${userCredential}");
-      return true;
+      return Result.success;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         Log.message(_tag, 'No user found for that email.');
@@ -113,16 +145,22 @@ class AuthService {
       } else {
         Log.message(_tag, e.code.toString());
       }
-      return false;
+      return Result.failure;
     }
   }
 
-  Future<void> signOut() async {
-    await FirebaseAuth.instance.signOut();
+  Future<Result> signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return Result.success;
+    } catch (e) {
+      Log.message(_tag, e.toString());
+      return Result.failure;
+    }
   }
 
   bool get isUserAnonymous {
     return FirebaseAuth.instance.currentUser != null &&
-        !FirebaseAuth.instance.currentUser!.isAnonymous;
+        FirebaseAuth.instance.currentUser!.isAnonymous;
   }
 }
