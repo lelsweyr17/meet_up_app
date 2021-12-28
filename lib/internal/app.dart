@@ -28,6 +28,7 @@ class _AppState extends State<App> {
       providers: [
         Provider<AuthBloc>(
           create: (_) => _authBloc,
+          dispose: (_, it) => it.dispose(),
         ),
       ],
       child: MaterialApp(
