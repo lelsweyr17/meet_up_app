@@ -8,14 +8,10 @@ class LoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
+    if (!Platform.isIOS) {
       return const CupertinoActivityIndicator();
     } else {
-      return const SizedBox(
-        height: 24,
-        width: 24,
-        child: CircularProgressIndicator(),
-      );
+      return const CircularProgressIndicator();
     }
   }
 }
