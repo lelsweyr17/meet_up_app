@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
@@ -85,4 +86,5 @@ void onLogOutPressed({
   );
 
   PreferencesService.instance.setShowStartPage(true);
+  AuthService.instance.signInAnonymously();
 }
