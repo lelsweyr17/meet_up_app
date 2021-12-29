@@ -32,6 +32,7 @@ class AuthService {
 
   Future<UserCredential> signInAnonymously() async {
     Log.message(_tag, "signInAnonymously");
+
     return await FirebaseAuth.instance.signInAnonymously();
   }
 
@@ -107,6 +108,7 @@ class AuthService {
 
   Future<Result> _linkWithAnonymous(AuthCredential credential) async {
     Log.message(_tag, "_linkWithAnonymous: credential=$credential");
+
     try {
       final userCredential = await FirebaseAuth.instance.currentUser
           ?.linkWithCredential(credential);
@@ -127,13 +129,13 @@ class AuthService {
     required String password,
   }) async {
     Log.message(_tag, "signInWithEmailAndPassword: email=$email");
+
     try {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print("signInWithEmailAndPassword ${userCredential}");
       return Result.success;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
@@ -150,6 +152,8 @@ class AuthService {
   }
 
   Future<Result> signOut() async {
+    Log.message(_tag, "signOut");
+
     try {
       await FirebaseAuth.instance.signOut();
       return Result.success;

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
-import 'package:meet_up_app/presentation/components/button.dart';
+import 'package:meet_up_app/presentation/components/logInAndSignUpButtons.dart';
+import 'package:meet_up_app/utils/log.dart';
 
 const _tag = "start_page";
 
@@ -12,19 +14,15 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final _localizations = AppLocalizations.of(context)!;
 
+    Log.message(
+        _tag, "isUserAnonymous ${AuthService.instance.isUserAnonymous}");
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Button(
-              text: _localizations.logIn,
-              onPressed: () => onNavigateLogInPressed(context),
-            ),
-            Button(
-              text: _localizations.signUp,
-              onPressed: () => onNavigateToSignUpPressed(context),
-            ),
+            const LogInAndSignUpButtons(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: InkWell(

@@ -3,6 +3,7 @@ import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/internal/routes.dart';
+import 'package:meet_up_app/services/preferences_service.dart';
 import 'package:meet_up_app/utils/log.dart';
 
 const _tag = "auth_reusable";
@@ -27,6 +28,8 @@ void onSkipPressed(BuildContext context) {
     Routes.instance.homePage,
     (route) => false,
   );
+
+  PreferencesService.instance.setShowStartPage(false);
 }
 
 void onSignUpPressed({
@@ -65,4 +68,21 @@ void onLogInPressed({
       );
     }
   });
+}
+
+void onLogOutPressed({
+  required BuildContext context,
+  required AuthBloc authBloc,
+}) {
+  Log.message(_tag, "onLogOutPressed");
+
+  authBloc.add(LogOutEvent());
+
+  Navigator.pushNamedAndRemoveUntil(
+    context,
+    Routes.instance.startPage,
+    (route) => false,
+  );
+
+  PreferencesService.instance.setShowStartPage(true);
 }

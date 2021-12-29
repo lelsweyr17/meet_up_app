@@ -4,6 +4,7 @@ import 'package:meet_up_app/presentation/pages/home_page.dart';
 import 'package:meet_up_app/presentation/pages/login_page.dart';
 import 'package:meet_up_app/presentation/pages/sign_up_page.dart';
 import 'package:meet_up_app/presentation/pages/start_page.dart';
+import 'package:meet_up_app/services/preferences_service.dart';
 import 'package:meet_up_app/utils/log.dart';
 
 const _tag = "routes";
@@ -17,7 +18,8 @@ class Routes {
 
   static Routes get instance => _instance;
 
-  String get initialRoute => (AuthService.instance.isUserAnonymous == true)
+  String get initialRoute => (AuthService.instance.isUserAnonymous == true ||
+          !PreferencesService.instance.isShowStartPage)
       ? Routes.instance.homePage
       : Routes.instance.startPage;
 
