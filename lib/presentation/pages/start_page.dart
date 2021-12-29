@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
-import 'package:meet_up_app/presentation/components/logInAndSignUpButtons.dart';import 'package:meet_up_app/utils/log.dart';
+import 'package:meet_up_app/presentation/components/logInAndSignUpButtons.dart';
+import 'package:meet_up_app/utils/log.dart';
 
 const _tag = "start_page";
 
