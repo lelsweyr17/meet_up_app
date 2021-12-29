@@ -4,6 +4,7 @@ import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/button_icon.dart';
+import 'package:meet_up_app/presentation/components/icons/app_icons.dart';
 import 'package:meet_up_app/presentation/components/logInAndSignUpButtons.dart';
 
 const _tag = "home_drawer";
@@ -47,7 +48,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                     Align(
                       alignment: Alignment.topRight,
                       child: ButtonIcon(
-                        icon: const Icon(Icons.exit_to_app_rounded),
+                        icon: AppIcons.exit,
                         onPressed: () => onLogOutPressed(
                           context: context,
                           authBloc: _authBloc,
