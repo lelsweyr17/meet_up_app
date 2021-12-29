@@ -9,6 +9,7 @@ class LogInAndSignUpButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Button(
           text: AppLocalizations.of(context)!.logIn,
