@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:meet_up_app/utils/log.dart';
 import 'package:meet_up_app/utils/result.dart';
@@ -85,11 +86,22 @@ class AuthService {
 
     final result = await _linkWithAnonymous(credential);
 
+    _createFirestoreUser();
+
     if (result == Result.success) {
       return Result.success;
     } else {
       return Result.failure;
     }
+  }
+
+  void _createFirestoreUser() {
+    Log.message(_tag, "_createFirestoreUser");
+    final currentUser = FirebaseAuth.instance.currentUser!;
+
+    FirebaseFirestore.instance.collection('users').doc(currentUser.uid).set({
+      'id': currentUser.uid,
+    });
   }
 
   Future<Result> _createUserWhenCurrentUserIsNull({
@@ -103,6 +115,9 @@ class AuthService {
       email: email,
       password: password,
     );
+
+    _createFirestoreUser();
+
     return Result.success;
   }
 

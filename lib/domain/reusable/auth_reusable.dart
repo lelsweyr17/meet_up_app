@@ -50,6 +50,8 @@ void onSignUpPressed({
       );
     }
   });
+
+  PreferencesService.instance.setShowStartPage(false);
 }
 
 void onLogInPressed({
@@ -69,6 +71,8 @@ void onLogInPressed({
       );
     }
   });
+
+  PreferencesService.instance.setShowStartPage(false);
 }
 
 void onLogOutPressed({
