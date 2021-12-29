@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
+import 'package:meet_up_app/services/preferences_service.dart';
 import 'package:meet_up_app/utils/log.dart';
 import 'package:meet_up_app/utils/result.dart';
 
@@ -61,6 +62,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     );
 
     if (result == Result.success) {
+      PreferencesService.instance.setShowStartPage(false);
       emit(Authenticated());
     } else {
       emit(Unauthenticated());

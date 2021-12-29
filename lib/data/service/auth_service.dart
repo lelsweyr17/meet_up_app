@@ -163,8 +163,8 @@ class AuthService {
     }
   }
 
-  bool get isUserAnonymous {
-    return FirebaseAuth.instance.currentUser != null &&
+  bool get isUserAnonymousOrNull {
+    return FirebaseAuth.instance.currentUser == null ||
         FirebaseAuth.instance.currentUser!.isAnonymous;
   }
 }
