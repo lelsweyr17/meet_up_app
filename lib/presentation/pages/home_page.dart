@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
-import 'package:meet_up_app/presentation/components/home_drawer.dart';
+import 'package:meet_up_app/presentation/components/home_drawer/home_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
