@@ -20,7 +20,8 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         title: 'Meet Up App',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.orange,
+          scaffoldBackgroundColor: Colors.white,
         ),
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
