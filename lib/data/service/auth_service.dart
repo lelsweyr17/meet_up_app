@@ -56,14 +56,14 @@ class AuthService {
         );
       }
     } on FirebaseAuthException catch (e) {
-      _firebaseAuthException(e);
+      _firebaseAuthExceptionCreateUser(e);
     } catch (e) {
       Log.message(_tag, e.toString());
     }
     return Result.failure;
   }
 
-  void _firebaseAuthException(FirebaseAuthException e) {
+  void _firebaseAuthExceptionCreateUser(FirebaseAuthException e) {
     if (e.code == 'weak-password') {
       Log.message(_tag, 'The password provided is too weak.');
     } else if (e.code == 'email-already-in-use') {
@@ -98,8 +98,9 @@ class AuthService {
   void _createFirestoreUser() {
     Log.message(_tag, "_createFirestoreUser");
     final currentUser = FirebaseAuth.instance.currentUser!;
+    final dbUsers = FirebaseFirestore.instance.collection('users');
 
-    FirebaseFirestore.instance.collection('users').doc(currentUser.uid).set({
+    dbUsers.doc(currentUser.uid).set({
       'id': currentUser.uid,
     });
   }
@@ -153,17 +154,21 @@ class AuthService {
       );
       return Result.success;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        Log.message(_tag, 'No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        Log.message(_tag, 'Wrong password provided for that user.');
-      } else if (e.code == "invalid-email") {
-        Log.message(_tag, 'The email address is badly formatted.');
-      } else {
-        Log.message(_tag, e.code.toString());
-      }
-      return Result.failure;
+      return _firebaseAuthExceptionSignIn(e);
     }
+  }
+
+  Result _firebaseAuthExceptionSignIn(FirebaseAuthException e) {
+    if (e.code == 'user-not-found') {
+      Log.message(_tag, 'No user found for that email.');
+    } else if (e.code == 'wrong-password') {
+      Log.message(_tag, 'Wrong password provided for that user.');
+    } else if (e.code == "invalid-email") {
+      Log.message(_tag, 'The email address is badly formatted.');
+    } else {
+      Log.message(_tag, e.code.toString());
+    }
+    return Result.failure;
   }
 
   Future<Result> signOut() async {
