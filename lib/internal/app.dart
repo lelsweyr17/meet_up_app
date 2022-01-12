@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:meet_up_app/internal/providers.dart';
 import 'package:meet_up_app/internal/routes.dart';
+import 'package:meet_up_app/internal/theme/dark_theme.dart';
+import 'package:meet_up_app/internal/theme/light_theme.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:provider/provider.dart';
 
@@ -19,10 +21,8 @@ class _AppState extends State<App> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Meet Up App',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-          scaffoldBackgroundColor: Colors.white,
-        ),
+        theme: LightTheme().theme,
+        darkTheme: DarkTheme().theme,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
         routes: Routes.instance.routes,
