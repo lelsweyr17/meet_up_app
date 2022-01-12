@@ -48,10 +48,9 @@ void onSignUpPressed({
         Routes.instance.homePage,
         (route) => false,
       );
+      PreferencesService.instance.setShowStartPage(false);
     }
   });
-
-  PreferencesService.instance.setShowStartPage(false);
 }
 
 void onLogInPressed({
@@ -69,10 +68,9 @@ void onLogInPressed({
         Routes.instance.homePage,
         (route) => false,
       );
+      PreferencesService.instance.setShowStartPage(false);
     }
   });
-
-  PreferencesService.instance.setShowStartPage(false);
 }
 
 void onLogOutPressed({
