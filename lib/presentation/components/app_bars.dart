@@ -12,10 +12,11 @@ class AppBars {
   PreferredSizeWidget transparentAppBarWithWhiteStatusBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
+      foregroundColor: Colors.orange,
       elevation: 0,
       systemOverlayStyle: const SystemUiOverlayStyle(
-        statusBarIconBrightness: Brightness.light, // For Android (dark icons)
-        statusBarBrightness: Brightness.dark, // For iOS (dark icons)
+        statusBarIconBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
       ),
     );
   }
@@ -23,6 +24,7 @@ class AppBars {
   PreferredSizeWidget transparentAppBarWithBlackStatusBar() {
     return AppBar(
       backgroundColor: Colors.transparent,
+      foregroundColor: Colors.orange,
       elevation: 0,
       systemOverlayStyle: const SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
