@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/utils/gradients.dart';
+import 'package:meet_up_app/utils/shadows.dart';
 
 class LinearGradientButton extends StatelessWidget {
   const LinearGradientButton({
@@ -20,21 +22,9 @@ class LinearGradientButton extends StatelessWidget {
         minHeight: 46,
       ),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xFFFF9F1C),
-            Color(0xFFEE6071),
-          ],
-        ),
+        gradient: Gradients.instance.yellowToRed(),
         boxShadow: [
-          BoxShadow(
-            color: const Color(0xFFE71D36).withOpacity(0.28),
-            spreadRadius: 4,
-            blurRadius: 8,
-            offset: const Offset(0, 4), // changes position of shadow
-          ),
+          Shadows.instance.red28(),
         ],
         borderRadius: BorderRadius.circular(12),
       ),
