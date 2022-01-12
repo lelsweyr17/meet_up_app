@@ -5,7 +5,7 @@ import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
-import 'package:meet_up_app/presentation/components/button.dart';
+import 'package:meet_up_app/presentation/components/buttons/button.dart';
 import 'package:meet_up_app/presentation/components/loading_indicator.dart';
 import 'package:meet_up_app/presentation/components/login_text_field.dart';
 

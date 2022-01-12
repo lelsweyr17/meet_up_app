@@ -6,8 +6,8 @@ import 'package:meet_up_app/internal/routes.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/home_drawer/add_photo_button.dart';
 import 'package:meet_up_app/presentation/components/home_drawer/drawer_tile.dart';
-import 'package:meet_up_app/presentation/components/icons/app_icons.dart';
 import 'package:meet_up_app/presentation/components/logInAndSignUpButtons.dart';
+import 'package:meet_up_app/utils/app_icons.dart';
 
 const _tag = "home_drawer";
 
