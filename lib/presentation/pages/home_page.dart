@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
+import 'package:meet_up_app/presentation/components/app_bars.dart';
+import 'package:meet_up_app/presentation/components/buttons/fab.dart';
 import 'package:meet_up_app/presentation/components/home_drawer/home_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,8 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _counter = 0;
-
   late final AppLocalizations _localizations;
 
   @override
@@ -20,36 +21,18 @@ class _HomePageState extends State<HomePage> {
     _localizations = AppLocalizations.of(context)!;
   }
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      drawer: const HomeDrawer(),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    return KeyboardDismissOnTap(
+      child: Scaffold(
+        appBar: AppBars.instance.appBarWithWhiteStatusBarAndSearch(),
+        drawer: const HomeDrawer(),
+        floatingActionButton: Fab(onTap: onTap),
       ),
     );
+  }
+
+  void onTap() {
+    // create new meeting
   }
 }
