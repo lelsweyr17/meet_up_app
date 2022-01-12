@@ -12,4 +12,10 @@ class AppIcons {
   static final logOut = SvgBuilder(path: "${path}log_out.svg");
 
   static final addPhoto = SvgBuilder(path: "${path}add_photo.svg");
+
+  static final close = SvgBuilder(path: "${path}close.svg");
+
+  static final hidden = SvgBuilder(path: "${path}hidden.svg");
+
+  static final notHidden = SvgBuilder(path: "${path}not_hidden.svg");
 }
