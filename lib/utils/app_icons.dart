@@ -18,4 +18,6 @@ class AppIcons {
   static final hidden = SvgBuilder(path: "${path}hidden.svg");
 
   static final notHidden = SvgBuilder(path: "${path}not_hidden.svg");
+
+  static final search = SvgBuilder(path: "${path}search.svg");
 }
