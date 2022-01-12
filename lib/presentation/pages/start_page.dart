@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
-import 'package:meet_up_app/presentation/components/button.dart';
+import 'package:meet_up_app/presentation/components/buttons/button.dart';
+import 'package:meet_up_app/utils/gradients.dart';
 
 const _tag = "start_page";
 
@@ -14,16 +15,9 @@ class StartPage extends StatelessWidget {
     final _localizations = AppLocalizations.of(context)!;
 
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         color: Colors.white,
-        gradient: LinearGradient(
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-          colors: [
-            Color(0xFFFF9F1C),
-            Color(0xFFEE6071),
-          ],
-        ),
+        gradient: Gradients.instance.yellowToRed(),
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -37,14 +31,17 @@ class StartPage extends StatelessWidget {
                   style: GoogleFonts.nunito(
                     fontSize: 48,
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 10,
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
