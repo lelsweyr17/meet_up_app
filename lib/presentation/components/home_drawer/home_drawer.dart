@@ -70,7 +70,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             Routes.instance.myMeetings,
                             context,
                           ),
-                          leading: AppIcons.calendar.build(),
+                          leading: (AppIcons.calendar
+                                ..color = const Color(0xff0d0d0d))
+                              .build(),
                           title: "My meetings",
                         ),
                         const Divider(

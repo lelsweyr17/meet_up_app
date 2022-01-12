@@ -55,7 +55,10 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(70),
                         ),
-                        child: (PeopleImages.person1..size = 140).build(),
+                        child: (PeopleImages.person1
+                              ..size = 140
+                              ..isIcon = false)
+                            .build(),
                       ),
                       const SizedBox(height: 50),
                       LoginTextField(

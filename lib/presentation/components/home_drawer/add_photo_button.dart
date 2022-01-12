@@ -21,7 +21,7 @@ class AddPhotoButton extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsets.all(30.0),
+          padding: const EdgeInsets.all(34.0),
           child: AppIcons.addPhoto.build(),
         ),
       ),
