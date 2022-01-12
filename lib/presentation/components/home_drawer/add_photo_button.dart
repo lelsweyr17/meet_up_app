@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:meet_up_app/presentation/components/icons/app_icons.dart';
+import 'package:meet_up_app/utils/app_icons.dart';
+import 'package:meet_up_app/utils/shadows.dart';
 
 class AddPhotoButton extends StatelessWidget {
   const AddPhotoButton({Key? key}) : super(key: key);
@@ -15,17 +16,12 @@ class AddPhotoButton extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(50),
           boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
-              spreadRadius: 5,
-              blurRadius: 8,
-              offset: const Offset(0, 0), // changes position of shadow
-            ),
+            Shadows.instance.black8(),
           ],
         ),
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsets.all(38.0),
+          padding: const EdgeInsets.all(30.0),
           child: AppIcons.addPhoto.build(),
         ),
       ),
