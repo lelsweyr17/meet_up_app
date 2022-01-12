@@ -22,10 +22,15 @@ class LoginTextField extends StatelessWidget {
       ),
       child: TextFormField(
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.symmetric(horizontal: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 14,
+          ),
           border: InputBorder.none,
           hintText: hintText,
+          hintStyle: const TextStyle(color: Color(0xFFB3B3B3)),
         ),
+        style: const TextStyle(color: Color(0xFF1A1A1A)),
         onChanged: (value) => onChanged(value),
         obscureText: obscure,
       ),
