@@ -6,11 +6,13 @@ class LoginTextField extends StatelessWidget {
     required this.hintText,
     required this.obscure,
     required this.onChanged,
+    required this.keyBoardType,
   }) : super(key: key);
 
   final String hintText;
   final bool obscure;
   final ValueChanged<String> onChanged;
+  final TextInputType keyBoardType;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class LoginTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       child: TextFormField(
+        keyboardType: keyBoardType,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 12,

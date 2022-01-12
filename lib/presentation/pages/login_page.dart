@@ -59,12 +59,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 50),
                       LoginTextField(
+                        keyBoardType: TextInputType.emailAddress,
                         hintText: _localizations.enterYourEmail,
                         obscure: false,
                         onChanged: (value) => _authBloc.emailSink.add(value),
                       ),
                       const SizedBox(height: 16),
                       LoginTextField(
+                        keyBoardType: TextInputType.visiblePassword,
                         hintText: _localizations.enterYourPassword,
                         obscure: true,
                         onChanged: (value) => _authBloc.passwordSink.add(value),
