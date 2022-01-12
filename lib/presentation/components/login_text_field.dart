@@ -20,10 +20,11 @@ class LoginTextField extends StatelessWidget {
         color: Colors.black.withOpacity(0.04),
         borderRadius: BorderRadius.circular(12),
       ),
-      child: TextField(
-        decoration: const InputDecoration(
+      child: TextFormField(
+        decoration: InputDecoration(
           contentPadding: EdgeInsets.symmetric(horizontal: 12),
           border: InputBorder.none,
+          hintText: hintText,
         ),
         onChanged: (value) => onChanged(value),
         obscureText: obscure,
