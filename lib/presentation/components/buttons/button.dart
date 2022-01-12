@@ -19,7 +19,7 @@ class Button extends StatelessWidget {
     final ButtonStyle outlineButtonStyle = OutlinedButton.styleFrom(
       primary: textColor,
       backgroundColor: buttonColor,
-      minimumSize: const Size(88, 46),
+      minimumSize: const Size(166, 46),
       padding: const EdgeInsets.symmetric(horizontal: 16),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(12)),
