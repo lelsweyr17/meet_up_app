@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: Text(AppLocalizations.of(context)!.profile),
       ),
     );
   }

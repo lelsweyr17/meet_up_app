@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings"),
+        title: Text(AppLocalizations.of(context)!.settings),
       ),
     );
   }

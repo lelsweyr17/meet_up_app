@@ -37,9 +37,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
       child: SafeArea(
         child: AuthService.instance.isUserAnonymousOrNull
             ? const LogInAndSignUpButtons()
@@ -63,7 +60,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             context,
                           ),
                           leading: AppIcons.profile.build(),
-                          title: "Profile",
+                          title: _localizations.profile,
                         ),
                         DrawerTile(
                           onTap: () => Routes.instance.navigateTo(
@@ -73,7 +70,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                           leading: (AppIcons.calendar
                                 ..color = const Color(0xff0d0d0d))
                               .build(),
-                          title: "My meetings",
+                          title: _localizations.myMeetings,
                         ),
                         const Divider(
                           indent: 16,
@@ -85,7 +82,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             context,
                           ),
                           leading: AppIcons.settings.build(),
-                          title: "Settings",
+                          title: _localizations.settings,
                         ),
                         DrawerTile(
                           onTap: () => onLogOutPressed(
@@ -93,7 +90,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             authBloc: _authBloc,
                           ),
                           leading: AppIcons.logOut.build(),
-                          title: "Log out",
+                          title: _localizations.logOut,
                         ),
                       ],
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/utils/app_icons.dart';
 
 class SearchTextField extends StatelessWidget {
@@ -22,7 +23,7 @@ class SearchTextField extends StatelessWidget {
               vertical: 14,
             ),
             border: InputBorder.none,
-            hintText: "Search",
+            hintText: AppLocalizations.of(context)!.search,
             hintStyle: const TextStyle(color: Color(0xFFB3B3B3)),
             suffixIcon: Padding(
               padding: const EdgeInsetsDirectional.only(end: 6.0),
