@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/buttons/button.dart';
 import 'package:meet_up_app/presentation/pages/start_page.dart';
 
@@ -28,7 +29,7 @@ void main() async {
       await tester.pumpWidget(
         makeTestableWidget(
           child: const StartPage(),
-          locale: Locale("ru"),
+          locale: const Locale("ru"),
         ),
       );
       await tester.pumpAndSettle();
