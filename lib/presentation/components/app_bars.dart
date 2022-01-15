@@ -12,7 +12,9 @@ class AppBars {
 
   static AppBars get instance => _instance;
 
-  PreferredSizeWidget transparentAppBarWithWhiteStatusBar() {
+  PreferredSizeWidget transparentAppBarWithWhiteStatusBar({
+    List<Widget> actions = const [],
+  }) {
     return AppBar(
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.orange,
@@ -21,10 +23,13 @@ class AppBars {
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark,
       ),
+      actions: actions,
     );
   }
 
-  PreferredSizeWidget transparentAppBarWithBlackStatusBar() {
+  PreferredSizeWidget transparentAppBarWithBlackStatusBar({
+    List<Widget> actions = const [],
+  }) {
     return AppBar(
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.orange,
@@ -33,6 +38,7 @@ class AppBars {
         statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
         statusBarBrightness: Brightness.light, // For iOS (dark icons)
       ),
+      actions: actions,
     );
   }
 
@@ -55,6 +61,7 @@ class AppBars {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AppBar(
+              backgroundColor: Colors.transparent,
               actions: [
                 IconButton(
                   onPressed: () {},
