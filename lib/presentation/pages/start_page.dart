@@ -47,7 +47,7 @@ class StartPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Button(
-                          text: AppLocalizations.of(context)!.logIn,
+                          text: _localizations.logIn,
                           onPressed: () => onNavigateLogInPressed(context),
                         ),
                       ),
@@ -56,7 +56,7 @@ class StartPage extends StatelessWidget {
                         child: Button(
                           textColor: Colors.deepOrangeAccent,
                           buttonColor: Colors.white,
-                          text: AppLocalizations.of(context)!.signUp,
+                          text: _localizations.signUp,
                           onPressed: () => onNavigateToSignUpPressed(context),
                         ),
                       ),
