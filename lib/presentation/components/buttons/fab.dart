@@ -21,14 +21,12 @@ class Fab extends StatelessWidget {
           Shadows.instance.black8(),
         ],
       ),
-      child: InkWell(
-        onTap: onTap,
-        child: const Center(
-          child: Icon(
-            Icons.add_rounded,
-            size: 35,
-            color: Colors.white,
-          ),
+      child: Center(
+        child: IconButton(
+          onPressed: onTap,
+          splashRadius: 30,
+          icon: const Icon(Icons.add_rounded, size: 30),
+          color: Colors.white,
         ),
       ),
     );
