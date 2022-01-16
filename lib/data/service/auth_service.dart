@@ -70,7 +70,7 @@ class AuthService {
 
     await _linkWithAnonymous(credential);
 
-    _createFirestoreUser();
+    await _createFirestoreUser();
   }
 
   Future<void> _createFirestoreUser() async {
