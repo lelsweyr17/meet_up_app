@@ -6,7 +6,6 @@ import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/services/preferences_service.dart';
 import 'package:meet_up_app/utils/log.dart';
-import 'package:meet_up_app/utils/result.dart';
 
 const _tag = "auth_bloc";
 
@@ -41,61 +40,98 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   void _handleEvents() {
     Log.message(_tag, "_handleEvents");
 
-    on<LogInEvent>(
-      (event, emit) async => await _logInEvent(emit),
-    );
-    on<LogOutEvent>(
-      (event, emit) async => await _logOutEvent(emit),
-    );
-    on<SignUpEvent>(
-      (event, emit) async => await _signUpEvent(emit),
-    );
+    on<LogInEvent>((_, emit) async => await _logInEvent(emit));
+    on<LogOutEvent>((_, emit) async => await _logOutEvent(emit));
+    on<SignUpEvent>((_, emit) async => await _signUpEvent(emit));
   }
 
   Future<void> _logInEvent(Emitter emit) async {
     Log.message(_tag, "_logInEvent");
-    emit(LoadingAuthentication());
 
-    final result = await _authService.signInWithEmailAndPassword(
-      email: _email,
-      password: _password,
-    );
-
-    if (result == Result.success) {
-      PreferencesService.instance.setShowStartPage(false);
-      emit(Authenticated());
-    } else {
-      emit(Unauthenticated());
+    try {
+      await _logIn(emit);
+    } on Exception catch (e) {
+      _logInFailed(e, emit);
     }
+  }
+
+  Future<void> _logIn(Emitter emit) async {
+    _emitLoadingAuthentication(emit);
+    await _signInWithEmailAndPassword();
+    PreferencesService.instance.setShowStartPage(false);
+    _emitAuthenticated(emit);
+  }
+
+  void _logInFailed(Exception e, Emitter emit) {
+    Log.message(_tag, e.toString());
+    _emitUnauthenticated(emit);
   }
 
   Future<void> _logOutEvent(Emitter emit) async {
     Log.message(_tag, "_logOutEvent");
-    emit(LoadingAuthentication());
 
-    final result = await _authService.signOut();
-
-    if (result == Result.success) {
-      emit(Unauthenticated());
-    } else {
-      emit(Authenticated());
+    try {
+      await _logOut(emit);
+    } on Exception catch (e) {
+      _logOutFailed(e, emit);
     }
+  }
+
+  Future<void> _logOut(Emitter emit) async {
+    _emitLoadingAuthentication(emit);
+    await _authService.signOut();
+    _emitUnauthenticated(emit);
+  }
+
+  void _logOutFailed(Exception e, Emitter emit) {
+    Log.message(_tag, e.toString());
+    _emitAuthenticated(emit);
   }
 
   Future<void> _signUpEvent(Emitter emit) async {
     Log.message(_tag, "_signUpEvent");
-    emit(LoadingAuthentication());
+    try {
+      _signUp(emit);
+    } on Exception catch (e) {
+      _signUpFailed(e, emit);
+    }
+  }
 
-    final result = await _authService.createUserWithEmailAndPassword(
+  Future<void> _signUp(Emitter emit) async {
+    _emitLoadingAuthentication(emit);
+    await _createUserWithEmailAndPassword();
+    _emitAuthenticated(emit);
+  }
+
+  Future<void> _createUserWithEmailAndPassword() async {
+    await _authService.createUserWithEmailAndPassword(
       email: _email,
       password: _password,
     );
+  }
 
-    if (result == Result.success) {
-      emit(Authenticated());
-    } else {
-      emit(Unauthenticated());
-    }
+  Future<void> _signInWithEmailAndPassword() async {
+    await _authService.signInWithEmailAndPassword(
+      email: _email,
+      password: _password,
+    );
+  }
+
+  void _signUpFailed(Exception e, Emitter emit) {
+    Log.message(_tag, e.toString());
+    _emitUnauthenticated(emit);
+  }
+
+  void _emitLoadingAuthentication(Emitter emit) {
+    emit(LoadingAuthentication());
+  }
+
+  void _emitAuthenticated(Emitter emit) {
+    emit(Authenticated());
+  }
+
+  void _emitUnauthenticated(Emitter emit) {
+    emit(Unauthenticated());
   }
 
   void dispose() {
