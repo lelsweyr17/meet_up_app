@@ -49,6 +49,12 @@ dependencies:
   flutter_keyboard_visibility: ^5.1.0
   mockito: ^5.0.17
   bloc_test: ^9.0.2
+  built_value: ^8.1.4
+  build_runner: ^2.1.7
+  json_serializable: ^6.1.4
+  built_value_generator: ^8.1.4
+  built_collection: ^5.1.1
+  rxdart: ^0.27.3
 
 dev_dependencies:
   flutter_test:
