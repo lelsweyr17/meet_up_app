@@ -11,7 +11,7 @@ class DarkTheme {
         ),
         titleTextStyle: TextStyle(
           fontSize: 18,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w500,
           color: Colors.black.withOpacity(0.9),
         ),
       );
