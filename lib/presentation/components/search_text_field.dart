@@ -14,7 +14,7 @@ class SearchTextField extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Theme.of(context).scaffoldBackgroundColor,
+          color: const Color(0xfff5f5f5),
         ),
         child: TextFormField(
           decoration: InputDecoration(
