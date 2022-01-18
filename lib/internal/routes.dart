@@ -7,6 +7,7 @@ import 'package:meet_up_app/presentation/pages/settings_page.dart';
 import 'package:meet_up_app/presentation/pages/sign_up_page.dart';
 import 'package:meet_up_app/presentation/pages/start_page.dart';
 import 'package:meet_up_app/services/preferences_service.dart';
+import 'package:meet_up_app/utils/animations.dart';
 import 'package:meet_up_app/utils/log.dart';
 
 const _tag = "routes";
@@ -48,12 +49,21 @@ class Routes {
 
   String get myMeetings => "/myMeetings";
 
-  void navigateTo(
-    String routeName,
-    BuildContext context,
-  ) =>
-      Navigator.pushNamed(
-        context,
-        routeName,
-      );
+  void animatedNavigation({
+    required BuildContext context,
+    required Widget page,
+  }) =>
+      Navigator.of(context).push(Routes.instance.navigateWithAnimation(page));
+
+  Route navigateWithAnimation(Widget page) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => page,
+      transitionsBuilder: (_, animation, __, child) {
+        return slideTransitionFromBottom(
+          animation: animation,
+          child: child,
+        );
+      },
+    );
+  }
 }
