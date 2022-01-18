@@ -6,10 +6,10 @@ import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/app_bars.dart';
+import 'package:meet_up_app/presentation/components/avatar.dart';
 import 'package:meet_up_app/presentation/components/buttons/linear_gradient_button.dart';
 import 'package:meet_up_app/presentation/components/loading_indicator.dart';
 import 'package:meet_up_app/presentation/components/login_text_field.dart';
-import 'package:meet_up_app/utils/people_images.dart';
 
 const _tag = "login_page";
 
@@ -31,7 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _localizations = AppLocalizations.of(context)!;
-    _authBloc = BlocProvider.of<AuthBloc>(context);
+    _authBloc = BlocProvider.of(context);
     _focusNode = FocusNode();
   }
 
@@ -50,16 +50,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(70),
-                        ),
-                        child: (PeopleImages.person1
-                              ..size = 140
-                              ..isIcon = false)
-                            .build(),
-                      ),
+                      const Avatar(size: 140),
                       const SizedBox(height: 50),
                       LoginTextField(
                         keyBoardType: TextInputType.emailAddress,
