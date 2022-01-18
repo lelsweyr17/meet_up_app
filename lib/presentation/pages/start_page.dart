@@ -15,10 +15,7 @@ class StartPage extends StatelessWidget {
     final _localizations = AppLocalizations.of(context)!;
 
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        gradient: Gradients.instance.yellowToRed(),
-      ),
+      decoration: BoxDecoration(gradient: Gradients.instance.yellowToRed()),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: SafeArea(
