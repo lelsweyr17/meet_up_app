@@ -91,7 +91,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Future<void> _signUpEvent(Emitter emit) async {
     Log.message(_tag, "_signUpEvent");
     try {
-      _signUp(emit);
+      await _signUp(emit);
     } on Exception catch (e) {
       _signUpFailed(e, emit);
     }
