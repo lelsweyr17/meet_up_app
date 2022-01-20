@@ -13,6 +13,7 @@ abstract class User implements Built<User, UserBuilder> {
     required int version,
     required String id,
     String name = "",
+    String bio = "",
     String? email,
     String? photo,
   }) =>
@@ -20,6 +21,7 @@ abstract class User implements Built<User, UserBuilder> {
         (b) => b
           ..id = id
           ..name = name
+          ..bio = bio
           ..email = email
           ..version = version
           ..photo = photo,
@@ -34,4 +36,6 @@ abstract class User implements Built<User, UserBuilder> {
   String get email;
 
   String? get photo;
+
+  String? get bio;
 }

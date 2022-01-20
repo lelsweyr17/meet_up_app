@@ -35,6 +35,12 @@ class _$UserSerializer implements StructuredSerializer<User> {
       ..add('photo')
       ..add(
           serializers.serialize(value, specifiedType: const FullType(String)));
+    value = object.bio;
+
+    result
+      ..add('bio')
+      ..add(
+          serializers.serialize(value, specifiedType: const FullType(String)));
 
     return result;
   }
@@ -70,6 +76,10 @@ class _$UserSerializer implements StructuredSerializer<User> {
           result.photo = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
+        case 'bio':
+          result.bio = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -88,6 +98,8 @@ class _$User extends User {
   final String email;
   @override
   final String? photo;
+  @override
+  final String? bio;
 
   factory _$User([void Function(UserBuilder)? updates]) =>
       (new UserBuilder()..update(updates)).build();
@@ -97,7 +109,8 @@ class _$User extends User {
       required this.id,
       required this.name,
       required this.email,
-      this.photo})
+      this.photo,
+      this.bio})
       : super._() {
     BuiltValueNullFieldError.checkNotNull(version, 'User', 'version');
     BuiltValueNullFieldError.checkNotNull(id, 'User', 'id');
@@ -120,15 +133,18 @@ class _$User extends User {
         id == other.id &&
         name == other.name &&
         email == other.email &&
-        photo == other.photo;
+        photo == other.photo &&
+        bio == other.bio;
   }
 
   @override
   int get hashCode {
     return $jf($jc(
-        $jc($jc($jc($jc(0, version.hashCode), id.hashCode), name.hashCode),
-            email.hashCode),
-        photo.hashCode));
+        $jc(
+            $jc($jc($jc($jc(0, version.hashCode), id.hashCode), name.hashCode),
+                email.hashCode),
+            photo.hashCode),
+        bio.hashCode));
   }
 
   @override
@@ -138,7 +154,8 @@ class _$User extends User {
           ..add('id', id)
           ..add('name', name)
           ..add('email', email)
-          ..add('photo', photo))
+          ..add('photo', photo)
+          ..add('bio', bio))
         .toString();
   }
 }
@@ -166,6 +183,10 @@ class UserBuilder implements Builder<User, UserBuilder> {
   String? get photo => _$this._photo;
   set photo(String? photo) => _$this._photo = photo;
 
+  String? _bio;
+  String? get bio => _$this._bio;
+  set bio(String? bio) => _$this._bio = bio;
+
   UserBuilder();
 
   UserBuilder get _$this {
@@ -176,6 +197,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
       _name = $v.name;
       _email = $v.email;
       _photo = $v.photo;
+      _bio = $v.bio;
       _$v = null;
     }
     return this;
@@ -202,7 +224,8 @@ class UserBuilder implements Builder<User, UserBuilder> {
             name: BuiltValueNullFieldError.checkNotNull(name, 'User', 'name'),
             email:
                 BuiltValueNullFieldError.checkNotNull(email, 'User', 'email'),
-            photo: photo);
+            photo: photo,
+            bio: bio);
     replace(_$result);
     return _$result;
   }
