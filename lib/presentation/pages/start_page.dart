@@ -5,8 +5,6 @@ import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/buttons/button.dart';
 import 'package:meet_up_app/utils/gradients.dart';
 
-const _tag = "start_page";
-
 class StartPage extends StatelessWidget {
   const StartPage({Key? key}) : super(key: key);
 
@@ -45,6 +43,7 @@ class StartPage extends StatelessWidget {
                       Expanded(
                         child: Button(
                           text: _localizations.logIn,
+                          isOutlined: true,
                           onPressed: () => onNavigateLogInPressed(context),
                         ),
                       ),
