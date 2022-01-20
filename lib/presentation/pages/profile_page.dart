@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
@@ -14,10 +16,40 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AuthService.instance.isUserAnonymousOrNull
-          ? const LogInAndSignUpButtonsPage()
-          : const _Body(),
+    return KeyboardDismissOnTap(
+      child: Scaffold(
+        body: AuthService.instance.isUserAnonymousOrNull
+            ? const LogInAndSignUpButtonsPage()
+            : const _Body(),
+      ),
+    );
+  }
+}
+
+class _Body extends StatelessWidget {
+  const _Body({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const CustomScrollView(
+      slivers: [
+        _AppBarWithAvatarAndRating(),
+        _ProfileDescription(),
+        _ProfileSettings(),
+      ],
+    );
+  }
+}
+
+class _AppBarWithAvatarAndRating extends StatelessWidget {
+  const _AppBarWithAvatarAndRating({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBars.instance.sliverAppBarWithGradient(
+      size: 120,
+      title: AppLocalizations.of(context)!.profile,
+      child: const _AvatarAndRating(),
     );
   }
 }
@@ -44,26 +76,14 @@ class _AvatarAndRating extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
-  const _Body({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const CustomScrollView(
-      slivers: [
-        _AppBarWithAvatarAndRating(),
-        _ProfileDescription(),
-        _ProfileSettings(),
-      ],
-    );
-  }
-}
-
 class _ProfileDescription extends StatelessWidget {
   const _ProfileDescription({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final _nameController = TextEditingController();
+    final _bioController = TextEditingController();
+
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(
@@ -71,15 +91,22 @@ class _ProfileDescription extends StatelessWidget {
           vertical: 20,
         ),
         child: Column(
-          children: const [
+          children: [
             _TitleAndSubtitle(
+              focusNode: FocusNode(),
+              textController: _nameController,
               title: "Арина",
               subtitle: "Имя",
+              hint: "Имя",
             ),
-            Divider(height: 0),
+            const Divider(),
             _TitleAndSubtitle(
+              focusNode: FocusNode(),
+              textController: _bioController,
               title: "Мобильный разработчик",
               subtitle: "О себе",
+              hint: "О себе",
+              limitLength: 160,
             ),
           ],
         ),
@@ -88,41 +115,65 @@ class _ProfileDescription extends StatelessWidget {
   }
 }
 
-class _AppBarWithAvatarAndRating extends StatelessWidget {
-  const _AppBarWithAvatarAndRating({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AppBars.instance.sliverAppBarWithGradient(
-      size: 120,
-      title: AppLocalizations.of(context)!.profile,
-      child: const _AvatarAndRating(),
-    );
-  }
-}
-
-class _TitleAndSubtitle extends StatelessWidget {
+class _TitleAndSubtitle extends StatefulWidget {
   const _TitleAndSubtitle({
     Key? key,
     required this.title,
+    required this.focusNode,
+    required this.textController,
+    required this.hint,
     this.subtitle = "",
+    this.onChanged,
+    this.limitLength = 100,
   }) : super(key: key);
 
+  final TextEditingController textController;
+  final ValueChanged<String>? onChanged;
   final String title;
+  final String hint;
   final String subtitle;
+  final int limitLength;
+  final FocusNode focusNode;
+
+  @override
+  State<_TitleAndSubtitle> createState() => _TitleAndSubtitleState();
+}
+
+class _TitleAndSubtitleState extends State<_TitleAndSubtitle> {
+  bool inFocus = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.focusNode.addListener(
+      () => setState(() => inFocus = widget.focusNode.hasFocus),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      dense: true,
       contentPadding: EdgeInsets.zero,
-      title: Text(
-        title,
-        style: const TextStyle(fontSize: 18),
-      ),
-      subtitle: Text(
-        subtitle,
-        style: const TextStyle(fontSize: 14),
+      title: TextFormField(
+        focusNode: widget.focusNode,
+        controller: widget.textController,
+        keyboardType: TextInputType.name,
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
+          border: InputBorder.none,
+          hintText: widget.hint,
+          hintStyle: const TextStyle(color: Color(0xFFB3B3B3), fontSize: 14),
+          helperText: widget.subtitle,
+          helperStyle: TextStyle(),
+        ),
+        minLines: 1,
+        maxLines: null,
+        style: const TextStyle(
+          color: Color(0xFF1A1A1A),
+          fontSize: 16,
+        ),
+        maxLength: inFocus ? widget.limitLength : null,
+        onChanged: (value) => widget.onChanged!(value),
       ),
     );
   }
