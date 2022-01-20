@@ -9,6 +9,7 @@ import 'package:meet_up_app/presentation/components/app_bars.dart';
 import 'package:meet_up_app/presentation/components/avatar.dart';
 import 'package:meet_up_app/presentation/components/logIn_and_sign_up_buttons_page.dart';
 import 'package:meet_up_app/presentation/components/rating.dart';
+import 'package:meet_up_app/services/profile_service.dart';
 import 'package:meet_up_app/utils/app_icons.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -88,25 +89,25 @@ class _ProfileDescription extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: 16,
-          vertical: 20,
+          vertical: 10,
         ),
         child: Column(
           children: [
-            _TitleAndSubtitle(
+            TextFieldWithHelperAndLimit(
               focusNode: FocusNode(),
               textController: _nameController,
-              title: "Арина",
               subtitle: "Имя",
               hint: "Имя",
+              onChanged: (value) => ProfileService.instance.setUsername(value),
             ),
             const Divider(),
-            _TitleAndSubtitle(
+            TextFieldWithHelperAndLimit(
               focusNode: FocusNode(),
               textController: _bioController,
-              title: "Мобильный разработчик",
               subtitle: "О себе",
               hint: "О себе",
-              limitLength: 160,
+              limitLength: 120,
+              onChanged: (value) => ProfileService.instance.setBio(value),
             ),
           ],
         ),
@@ -115,13 +116,13 @@ class _ProfileDescription extends StatelessWidget {
   }
 }
 
-class _TitleAndSubtitle extends StatefulWidget {
-  const _TitleAndSubtitle({
+class TextFieldWithHelperAndLimit extends StatefulWidget {
+  const TextFieldWithHelperAndLimit({
     Key? key,
-    required this.title,
     required this.focusNode,
     required this.textController,
     required this.hint,
+    this.initialTitle = "",
     this.subtitle = "",
     this.onChanged,
     this.limitLength = 100,
@@ -129,17 +130,19 @@ class _TitleAndSubtitle extends StatefulWidget {
 
   final TextEditingController textController;
   final ValueChanged<String>? onChanged;
-  final String title;
+  final String initialTitle;
   final String hint;
   final String subtitle;
   final int limitLength;
   final FocusNode focusNode;
 
   @override
-  State<_TitleAndSubtitle> createState() => _TitleAndSubtitleState();
+  State<TextFieldWithHelperAndLimit> createState() =>
+      TextFieldWithHelperAndLimitState();
 }
 
-class _TitleAndSubtitleState extends State<_TitleAndSubtitle> {
+class TextFieldWithHelperAndLimitState
+    extends State<TextFieldWithHelperAndLimit> {
   bool inFocus = false;
 
   @override
@@ -155,6 +158,7 @@ class _TitleAndSubtitleState extends State<_TitleAndSubtitle> {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: TextFormField(
+        scrollPadding: EdgeInsets.zero,
         focusNode: widget.focusNode,
         controller: widget.textController,
         keyboardType: TextInputType.name,
@@ -164,7 +168,10 @@ class _TitleAndSubtitleState extends State<_TitleAndSubtitle> {
           hintText: widget.hint,
           hintStyle: const TextStyle(color: Color(0xFFB3B3B3), fontSize: 14),
           helperText: widget.subtitle,
-          helperStyle: TextStyle(),
+          helperStyle: const TextStyle(
+            fontSize: 12,
+            color: Color(0xff808080),
+          ),
         ),
         minLines: 1,
         maxLines: null,
@@ -259,7 +266,7 @@ class _ProfileSettings extends StatelessWidget {
             RoundedBorderContainerWithChild(
               onPressed: () {},
               child: LeadingAndTitle(
-                title: "Change profile photo",
+                title: AppLocalizations.of(context)!.changeProfilePhoto,
                 titleColor: Colors.orange,
                 leading: (AppIcons.addPhoto..color = Colors.orange).build(),
               ),
@@ -270,12 +277,12 @@ class _ProfileSettings extends StatelessWidget {
               child: Column(
                 children: [
                   LeadingAndTitle(
-                    title: "Meetings",
+                    title: AppLocalizations.of(context)!.myMeetings,
                     leading: (AppIcons.calendar).build(),
                   ),
                   const Divider(height: 0),
                   LeadingAndTitle(
-                    title: "Settings",
+                    title: AppLocalizations.of(context)!.settings,
                     leading: (AppIcons.settings).build(),
                   ),
                 ],
@@ -283,10 +290,12 @@ class _ProfileSettings extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             RoundedBorderContainerWithChild(
-              onPressed: () =>
-                  onLogOutPressed(context: context, authBloc: authBloc),
+              onPressed: () => onLogOutPressed(
+                context: context,
+                authBloc: authBloc,
+              ),
               child: LeadingAndTitle(
-                title: "Log out",
+                title: AppLocalizations.of(context)!.logOut,
                 leading: AppIcons.logOut.build(),
               ),
             ),

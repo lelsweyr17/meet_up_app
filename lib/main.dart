@@ -9,5 +9,6 @@ void main() async {
   await Firebase.initializeApp();
   await PreferencesService.init();
   UserRepository.init();
+
   runApp(const App());
 }
