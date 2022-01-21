@@ -10,10 +10,6 @@ class UserRepository {
 
   static UserRepository get instance => _instance;
 
-  static void init() {
-    Log.message(_tag, "init");
-  }
-
   void setUsername(String name) {
     Log.message(_tag, "setUsername: $name");
     _updateUser((user) => user.name = name);
@@ -24,7 +20,9 @@ class UserRepository {
     _updateUser((user) => user.bio = value);
   }
 
-  void _updateUser(Function(UserBuilder) updates) {
+  void _updateUser(Function(UserBuilder) updates) async {
     Log.message(_tag, "_updateUser: $updates");
+
+    // firebasePath.update(serialize(updatedUser) as Map<String, Object>);
   }
 }
