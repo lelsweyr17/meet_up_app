@@ -28,6 +28,8 @@ class LightTheme {
 
   ThemeData get theme => ThemeData(
         appBarTheme: appBarTheme,
+        splashColor: Colors.orange[200],
+        highlightColor: Colors.orange[200],
         drawerTheme: drawerTheme,
         brightness: Brightness.light,
         primarySwatch: Colors.orange,
