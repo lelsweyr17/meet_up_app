@@ -17,31 +17,43 @@ class _$UserSerializer implements StructuredSerializer<User> {
   @override
   Iterable<Object?> serialize(Serializers serializers, User object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      'version',
-      serializers.serialize(object.version, specifiedType: const FullType(int)),
-      'id',
-      serializers.serialize(object.id, specifiedType: const FullType(String)),
-      'name',
-      serializers.serialize(object.name, specifiedType: const FullType(String)),
-      'email',
-      serializers.serialize(object.email,
-          specifiedType: const FullType(String)),
-    ];
+    final result = <Object?>[];
     Object? value;
+    value = object.id;
+    if (value != null) {
+      result
+        ..add('id')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.name;
+    if (value != null) {
+      result
+        ..add('name')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.email;
+    if (value != null) {
+      result
+        ..add('email')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.photo;
-
-    result
-      ..add('photo')
-      ..add(
-          serializers.serialize(value, specifiedType: const FullType(String)));
+    if (value != null) {
+      result
+        ..add('photo')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     value = object.bio;
-
-    result
-      ..add('bio')
-      ..add(
-          serializers.serialize(value, specifiedType: const FullType(String)));
-
+    if (value != null) {
+      result
+        ..add('bio')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -56,21 +68,17 @@ class _$UserSerializer implements StructuredSerializer<User> {
       iterator.moveNext();
       final Object? value = iterator.current;
       switch (key) {
-        case 'version':
-          result.version = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
         case 'id':
           result.id = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'name':
           result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'email':
           result.email = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+              specifiedType: const FullType(String)) as String?;
           break;
         case 'photo':
           result.photo = serializers.deserialize(value,
@@ -89,13 +97,11 @@ class _$UserSerializer implements StructuredSerializer<User> {
 
 class _$User extends User {
   @override
-  final int version;
+  final String? id;
   @override
-  final String id;
+  final String? name;
   @override
-  final String name;
-  @override
-  final String email;
+  final String? email;
   @override
   final String? photo;
   @override
@@ -104,19 +110,7 @@ class _$User extends User {
   factory _$User([void Function(UserBuilder)? updates]) =>
       (new UserBuilder()..update(updates)).build();
 
-  _$User._(
-      {required this.version,
-      required this.id,
-      required this.name,
-      required this.email,
-      this.photo,
-      this.bio})
-      : super._() {
-    BuiltValueNullFieldError.checkNotNull(version, 'User', 'version');
-    BuiltValueNullFieldError.checkNotNull(id, 'User', 'id');
-    BuiltValueNullFieldError.checkNotNull(name, 'User', 'name');
-    BuiltValueNullFieldError.checkNotNull(email, 'User', 'email');
-  }
+  _$User._({this.id, this.name, this.email, this.photo, this.bio}) : super._();
 
   @override
   User rebuild(void Function(UserBuilder) updates) =>
@@ -129,7 +123,6 @@ class _$User extends User {
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is User &&
-        version == other.version &&
         id == other.id &&
         name == other.name &&
         email == other.email &&
@@ -140,9 +133,7 @@ class _$User extends User {
   @override
   int get hashCode {
     return $jf($jc(
-        $jc(
-            $jc($jc($jc($jc(0, version.hashCode), id.hashCode), name.hashCode),
-                email.hashCode),
+        $jc($jc($jc($jc(0, id.hashCode), name.hashCode), email.hashCode),
             photo.hashCode),
         bio.hashCode));
   }
@@ -150,7 +141,6 @@ class _$User extends User {
   @override
   String toString() {
     return (newBuiltValueToStringHelper('User')
-          ..add('version', version)
           ..add('id', id)
           ..add('name', name)
           ..add('email', email)
@@ -162,10 +152,6 @@ class _$User extends User {
 
 class UserBuilder implements Builder<User, UserBuilder> {
   _$User? _$v;
-
-  int? _version;
-  int? get version => _$this._version;
-  set version(int? version) => _$this._version = version;
 
   String? _id;
   String? get id => _$this._id;
@@ -192,7 +178,6 @@ class UserBuilder implements Builder<User, UserBuilder> {
   UserBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
-      _version = $v.version;
       _id = $v.id;
       _name = $v.name;
       _email = $v.email;
@@ -217,15 +202,7 @@ class UserBuilder implements Builder<User, UserBuilder> {
   @override
   _$User build() {
     final _$result = _$v ??
-        new _$User._(
-            version: BuiltValueNullFieldError.checkNotNull(
-                version, 'User', 'version'),
-            id: BuiltValueNullFieldError.checkNotNull(id, 'User', 'id'),
-            name: BuiltValueNullFieldError.checkNotNull(name, 'User', 'name'),
-            email:
-                BuiltValueNullFieldError.checkNotNull(email, 'User', 'email'),
-            photo: photo,
-            bio: bio);
+        new _$User._(id: id, name: name, email: email, photo: photo, bio: bio);
     replace(_$result);
     return _$result;
   }
