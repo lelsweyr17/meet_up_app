@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
-import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/app_bars.dart';
@@ -25,14 +24,12 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late final AppLocalizations _localizations;
   late final AuthBloc _authBloc;
-  late final FocusNode _focusNode;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     _localizations = AppLocalizations.of(context)!;
     _authBloc = BlocProvider.of(context);
-    _focusNode = FocusNode();
   }
 
   @override

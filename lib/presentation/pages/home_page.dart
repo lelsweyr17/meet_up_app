@@ -9,21 +9,8 @@ import 'package:meet_up_app/presentation/components/search_text_field.dart';
 import 'package:meet_up_app/presentation/pages/profile_page.dart';
 import 'package:meet_up_app/utils/app_icons.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
-
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  late final AppLocalizations _localizations;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _localizations = AppLocalizations.of(context)!;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +39,29 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+        bottomNavigationBar: BottomAppBar(
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 8,
+          // color: Colors.blue,
+          child: IconTheme(
+            data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                IconButton(
+                  icon: const Icon(Icons.search),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(Icons.favorite),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
         floatingActionButton: Fab(onTap: onFabPressed),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }

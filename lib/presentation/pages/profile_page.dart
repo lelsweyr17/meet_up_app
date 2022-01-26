@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+import 'package:meet_up_app/data/model/client/user.dart';
+import 'package:meet_up_app/data/repository/user_repository.dart';
 import 'package:meet_up_app/data/service/auth_service.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
+import 'package:meet_up_app/domain/bloc/profile/profile_bloc.dart';
 import 'package:meet_up_app/domain/reusable/auth_reusable.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/app_bars.dart';
 import 'package:meet_up_app/presentation/components/avatar.dart';
 import 'package:meet_up_app/presentation/components/logIn_and_sign_up_buttons_page.dart';
 import 'package:meet_up_app/presentation/components/rating.dart';
-import 'package:meet_up_app/services/profile_service.dart';
 import 'package:meet_up_app/utils/app_icons.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -82,36 +84,50 @@ class _ProfileDescription extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _nameController = TextEditingController();
-    final _bioController = TextEditingController();
+    final localizations = AppLocalizations.of(context)!;
+    final ProfileBloc profileBloc = ProfileBloc();
 
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 10,
-        ),
-        child: Column(
-          children: [
-            TextFieldWithHelperAndLimit(
-              focusNode: FocusNode(),
-              textController: _nameController,
-              subtitle: "Имя",
-              hint: "Имя",
-              onChanged: (value) => ProfileService.instance.setUsername(value),
+    return StreamBuilder(
+      stream: UserRepository.instance.stream,
+      builder: (context, snapshot) {
+        if (snapshot.data == null) return const SliverToBoxAdapter();
+
+        final user = snapshot.data as User;
+
+        return SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 10,
             ),
-            const Divider(),
-            TextFieldWithHelperAndLimit(
-              focusNode: FocusNode(),
-              textController: _bioController,
-              subtitle: "О себе",
-              hint: "О себе",
-              limitLength: 120,
-              onChanged: (value) => ProfileService.instance.setBio(value),
+            child: BlocBuilder(
+              bloc: profileBloc,
+              builder: (context, _) {
+                return Column(
+                  children: [
+                    TextFieldWithHelperAndLimit(
+                      focusNode: FocusNode(),
+                      initialTitle: user.name,
+                      subtitle: localizations.name,
+                      hint: localizations.name,
+                      onChanged: (value) => profileBloc.add(UpdateName(value)),
+                    ),
+                    const Divider(),
+                    TextFieldWithHelperAndLimit(
+                      focusNode: FocusNode(),
+                      initialTitle: user.bio,
+                      subtitle: localizations.bio,
+                      hint: localizations.bio,
+                      limitLength: 120,
+                      onChanged: (value) => profileBloc.add(UpdateBio(value)),
+                    ),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -120,17 +136,15 @@ class TextFieldWithHelperAndLimit extends StatefulWidget {
   const TextFieldWithHelperAndLimit({
     Key? key,
     required this.focusNode,
-    required this.textController,
     required this.hint,
-    this.initialTitle = "",
+    this.initialTitle,
     this.subtitle = "",
     this.onChanged,
     this.limitLength = 100,
   }) : super(key: key);
 
-  final TextEditingController textController;
   final ValueChanged<String>? onChanged;
-  final String initialTitle;
+  final String? initialTitle;
   final String hint;
   final String subtitle;
   final int limitLength;
@@ -160,10 +174,11 @@ class TextFieldWithHelperAndLimitState
       title: TextFormField(
         scrollPadding: EdgeInsets.zero,
         focusNode: widget.focusNode,
-        controller: widget.textController,
         keyboardType: TextInputType.name,
+        initialValue: widget.initialTitle,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 4),
           border: InputBorder.none,
           hintText: widget.hint,
           hintStyle: const TextStyle(color: Color(0xFFB3B3B3), fontSize: 14),
@@ -254,8 +269,6 @@ class _ProfileSettings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final authBloc = AuthBloc();
-
     return SliverFillRemaining(
       hasScrollBody: false,
       child: Container(
@@ -292,7 +305,7 @@ class _ProfileSettings extends StatelessWidget {
             RoundedBorderContainerWithChild(
               onPressed: () => onLogOutPressed(
                 context: context,
-                authBloc: authBloc,
+                authBloc: AuthBloc(),
               ),
               child: LeadingAndTitle(
                 title: AppLocalizations.of(context)!.logOut,
