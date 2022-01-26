@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meet_up_app/data/service/auth_service.dart';
-import 'package:meet_up_app/domain/bloc/auth/auth_event.dart';
-import 'package:meet_up_app/domain/bloc/auth/auth_state.dart';
 import 'package:meet_up_app/services/preferences_service.dart';
 import 'package:meet_up_app/utils/log.dart';
+
+part 'auth_event.dart';
+
+part 'auth_state.dart';
 
 const _tag = "auth_bloc";
 
@@ -22,6 +24,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     _passwordStream.listen((password) => _password = password);
   }
 
+  void _handleEvents() {
+    Log.message(_tag, "_handleEvents");
+
+    on<LogInEvent>((_, emit) async => await _logInEvent(emit));
+    on<LogOutEvent>((_, emit) async => await _logOutEvent(emit));
+    on<SignUpEvent>((_, emit) async => await _signUpEvent(emit));
+  }
+
   final _authService = AuthService.instance;
   String _password = "";
   String _email = "";
@@ -36,14 +46,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   Stream<String> get _passwordStream => _passwordController.stream;
 
   Stream<String> get _emailStream => _emailController.stream;
-
-  void _handleEvents() {
-    Log.message(_tag, "_handleEvents");
-
-    on<LogInEvent>((_, emit) async => await _logInEvent(emit));
-    on<LogOutEvent>((_, emit) async => await _logOutEvent(emit));
-    on<SignUpEvent>((_, emit) async => await _signUpEvent(emit));
-  }
 
   Future<void> _logInEvent(Emitter emit) async {
     Log.message(_tag, "_logInEvent");
