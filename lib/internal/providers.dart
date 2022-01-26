@@ -1,16 +1,14 @@
 import 'package:meet_up_app/data/repository/user_repository.dart';
 import 'package:meet_up_app/domain/bloc/auth/auth_bloc.dart';
-import 'package:meet_up_app/utils/log.dart';
+import 'package:meet_up_app/domain/bloc/profile/profile_bloc.dart';
 import 'package:provider/provider.dart';
 
 const _tag = "providers";
 
 class Providers {
-  Providers._create() {
-    Log.message(_tag, "_init");
-  }
+  const Providers._create();
 
-  static final Providers _instance = Providers._create();
+  static const Providers _instance = Providers._create();
 
   static Providers get instance => _instance;
 
@@ -21,6 +19,10 @@ class Providers {
         ),
         Provider<UserRepository>(
           create: (_) => UserRepository.instance,
+          dispose: (_, it) => UserRepository.instance.dispose(),
+        ),
+        Provider<ProfileBloc>(
+          create: (_) => ProfileBloc(),
         ),
       ];
 }
