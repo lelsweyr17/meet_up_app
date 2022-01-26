@@ -9,5 +9,7 @@
     "profile": "Profile",
     "myMeetings": "My meetings",
     "search": "Search",
-    "changeProfilePhoto": "Change profile photo"
+    "changeProfilePhoto": "Change profile photo",
+    "name": "Name",
+    "bio": "Bio"
 }

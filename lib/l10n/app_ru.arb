@@ -9,5 +9,7 @@
     "profile": "Профиль",
     "myMeetings": "Мои встречи",
     "search": "Поиск",
-    "changeProfilePhoto": "Сменить фото"
+    "changeProfilePhoto": "Сменить фото",
+    "name": "Имя",
+    "bio": "О себе"
 }
