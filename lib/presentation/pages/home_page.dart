@@ -4,6 +4,7 @@ import 'package:meet_up_app/internal/routes.dart';
 import 'package:meet_up_app/l10n/app_localizations_export.dart';
 import 'package:meet_up_app/presentation/components/app_bars.dart';
 import 'package:meet_up_app/presentation/components/avatar.dart';
+import 'package:meet_up_app/presentation/components/bottom_bar.dart';
 import 'package:meet_up_app/presentation/components/buttons/fab.dart';
 import 'package:meet_up_app/presentation/components/search_text_field.dart';
 import 'package:meet_up_app/presentation/pages/profile_page.dart';
@@ -39,27 +40,7 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        bottomNavigationBar: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 8,
-          // color: Colors.blue,
-          child: IconTheme(
-            data: IconThemeData(color: Theme.of(context).colorScheme.onPrimary),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.search),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(Icons.favorite),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ),
+        bottomNavigationBar: const BottomBar(),
         floatingActionButton: Fab(onTap: onFabPressed),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),

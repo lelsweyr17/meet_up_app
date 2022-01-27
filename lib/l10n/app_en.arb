@@ -11,5 +11,6 @@
     "search": "Search",
     "changeProfilePhoto": "Change profile photo",
     "name": "Name",
-    "bio": "Bio"
+    "bio": "Bio",
+    "bookmarks": "Bookmarks"
 }
