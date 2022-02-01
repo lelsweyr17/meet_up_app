@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meet_up_app/presentation/pages/create_meeting_page.dart';
 import 'package:meet_up_app/presentation/pages/home_page.dart';
 import 'package:meet_up_app/presentation/pages/login_page.dart';
 import 'package:meet_up_app/presentation/pages/my_meetings_page.dart';
@@ -33,6 +34,7 @@ class Routes {
         settings: (context) => const SettingsPage(),
         profile: (context) => const ProfilePage(),
         myMeetings: (context) => const MyMeetingsPage(),
+        createMeeting: (context) => const CreateMeetingPage(),
       };
 
   String get startPage => "/start";
@@ -48,6 +50,8 @@ class Routes {
   String get profile => "/profile";
 
   String get myMeetings => "/myMeetings";
+
+  String get createMeeting => "createMeeting";
 
   void animatedNavigation({
     required BuildContext context,
