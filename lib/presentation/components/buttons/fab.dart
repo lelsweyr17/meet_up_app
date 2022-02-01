@@ -16,7 +16,7 @@ class Fab extends StatelessWidget {
         gradient: Gradients.instance.yellowToRed(),
       ),
       child: FloatingActionButton(
-        onPressed: () {},
+        onPressed: onTap,
         elevation: 0,
         highlightElevation: 0,
         clipBehavior: Clip.antiAlias,
