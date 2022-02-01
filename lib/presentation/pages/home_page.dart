@@ -7,8 +7,12 @@ import 'package:meet_up_app/presentation/components/avatar.dart';
 import 'package:meet_up_app/presentation/components/bottom_bar.dart';
 import 'package:meet_up_app/presentation/components/buttons/fab.dart';
 import 'package:meet_up_app/presentation/components/search_text_field.dart';
+import 'package:meet_up_app/presentation/pages/create_meeting_page.dart';
 import 'package:meet_up_app/presentation/pages/profile_page.dart';
 import 'package:meet_up_app/utils/app_icons.dart';
+import 'package:meet_up_app/utils/log.dart';
+
+const _tag = "home_page";
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -41,14 +45,20 @@ class HomePage extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: const BottomBar(),
-        floatingActionButton: Fab(onTap: onFabPressed),
+        floatingActionButton: Fab(
+          onTap: () => onFabPressed(context),
+        ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
   }
 
-  void onFabPressed() {
-    // create new meeting
+  void onFabPressed(context) {
+    Log.message(_tag, "onFabPressed");
+    Routes.instance.animatedNavigation(
+      context: context,
+      page: const CreateMeetingPage(),
+    );
   }
 }
 
