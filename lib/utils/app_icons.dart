@@ -22,4 +22,6 @@ class AppIcons {
   static final search = SvgBuilder(path: "${path}search.svg");
 
   static final bookmark = SvgBuilder(path: "${path}bookmark.svg");
+
+  static final pen = SvgBuilder(path: "${path}pen.svg");
 }
