@@ -1,0 +1,16 @@
+{
+    "signUp": "Регистрация",
+    "logIn": "Вход",
+    "logOut": "Выход",
+    "skip": "Пропустить",
+    "enterYourEmail": "Введите email",
+    "enterYourPassword": "Введите пароль",
+    "settings": "Настройки",
+    "profile": "Профиль",
+    "myMeetings": "Мои встречи",
+    "search": "Поиск",
+    "changeProfilePhoto": "Сменить фото",
+    "name": "Имя",
+    "bio": "О себе",
+    "bookmarks": "Закладки"
+}

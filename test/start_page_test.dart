@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:meet_up_app/l10n/app_localizations_export.dart';
-import 'package:meet_up_app/presentation/components/buttons/button.dart';
-import 'package:meet_up_app/presentation/pages/start_page.dart';
+import 'package:meet_up_app/core/l10n/app_localizations_export.dart';
+import 'package:meet_up_app/features/authorization/presentation/pages/start_page.dart';
+import 'package:meet_up_app/features/authorization/presentation/widgets/button.dart';
 
 Widget makeTestableWidget({
   required Widget child,
