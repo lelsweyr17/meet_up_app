@@ -15,7 +15,7 @@ class SignUpUseCase implements AuthorizationUseCases<User, Params> {
 
   @override
   Future<Either<Failure, User>> call(Params params) async {
-    return await _repository.login(
+    return await _repository.signUp(
       login: params.login,
       password: params.password,
     );
