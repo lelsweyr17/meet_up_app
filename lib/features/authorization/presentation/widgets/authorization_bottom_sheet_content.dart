@@ -5,8 +5,8 @@ import 'package:meet_up_app/features/authorization/presentation/widgets/bottom_s
 import 'package:meet_up_app/core/utils/context_helper.dart';
 import 'package:provider/provider.dart';
 
-import 'button.dart';
 import 'login_text_field.dart';
+import 'button.dart';
 
 class AuthorizationBottomSheetContent extends StatefulWidget {
   const AuthorizationBottomSheetContent({

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AuthorizationTextField extends StatelessWidget {
-  const AuthorizationTextField({
+class LoginTextField extends StatelessWidget {
+  const LoginTextField({
     Key? key,
     required this.hintText,
     required this.obscure,
