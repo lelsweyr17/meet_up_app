@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "144743262112",
+    "project_id": "meet-up-app-d5564",
+    "storage_bucket": "meet-up-app-d5564.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:144743262112:android:4b2b485f1bc5b0c53f26c5",
+        "android_client_info": {
+          "package_name": "com.example.meet_up_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "144743262112-q2storu8d2d11rpl9t0d6n21pol59pmi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUv8TgoVD9OICkX074CoXZpOhNeviSPMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "144743262112-q2storu8d2d11rpl9t0d6n21pol59pmi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "144743262112-7en70j6jmidajq9hok94pd2nup7rrq5u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.meetUpApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
